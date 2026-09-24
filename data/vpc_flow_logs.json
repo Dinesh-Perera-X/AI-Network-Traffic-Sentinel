@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "vpc_id": "vpc-0192837456",
+    "region": "us-east-1"
+  },
+  "flows": [
+    {
+      "flow_id": "FLOW-1001",
+      "source_ip": "192.168.1.50",
+      "destination_ip": "10.0.1.15",
+      "destination_port": 443,
+      "protocol": "TCP",
+      "bytes_transferred": 1048576,
+      "action": "ACCEPT"
+    },
+    {
+      "flow_id": "FLOW-1002",
+      "source_ip": "203.0.113.42",
+      "destination_ip": "10.0.1.10",
+      "destination_port": 22,
+      "protocol": "TCP",
+      "bytes_transferred": 512,
+      "action": "ACCEPT"
+    },
+    {
+      "flow_id": "FLOW-1003",
+      "source_ip": "198.51.100.88",
+      "destination_ip": "10.0.2.20",
+      "destination_port": 3306,
+      "protocol": "TCP",
+      "bytes_transferred": 150000000,
+      "action": "ACCEPT"
+    }
+  ]
+}
