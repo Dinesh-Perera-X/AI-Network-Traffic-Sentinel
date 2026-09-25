@@ -4,6 +4,7 @@ from rich.panel import Panel
 from rich.table import Table
 
 from core.flow_parser import FlowParser
+from analyzers.scan_detector import ScanDetector
 
 console = Console()
 
@@ -22,32 +23,37 @@ def main():
     display_banner()
 
     flows = FlowParser.load_flows(args.logs)
+    analyzed_flows = ScanDetector.evaluate_flows(flows)
 
-    table = Table(title="[bold cyan]📋 Ingested VPC Network Flows[/bold cyan]", border_style="cyan")
+    table = Table(title="[bold red]🔍 Day 2: Port-Scanning & Brute-Force Detection[/bold red]", border_style="red")
     table.add_column("Flow ID", justify="center", style="dim")
     table.add_column("Source IP", style="yellow")
-    table.add_column("Dest IP", style="yellow")
     table.add_column("Port", justify="center", style="magenta")
-    table.add_column("Protocol", justify="center", style="white")
-    table.add_column("Bytes", justify="right", style="cyan")
-    table.add_column("Action", justify="center", style="green")
+    table.add_column("Detected Behavior", style="cyan")
+    table.add_column("Threat Level", justify="center")
 
-    if not flows:
-        table.add_row("-", "No flows found.", "-", "-", "-", "-", "-")
+    if not analyzed_flows:
+        table.add_row("-", "No flows found.", "-", "-", "-")
     else:
-        for f in flows:
+        for f in analyzed_flows:
+            level = f["threat_level"]
+            if level == "CRITICAL":
+                level_str = "[bold red]CRITICAL[/bold red]"
+            elif level == "HIGH":
+                level_str = "[bold yellow]HIGH[/bold yellow]"
+            else:
+                level_str = "[bold green]NORMAL[/bold green]"
+
             table.add_row(
                 f["flow_id"],
                 f["source_ip"],
-                f["destination_ip"],
                 str(f["destination_port"]),
-                f["protocol"],
-                f"{f['bytes_transferred']:,}",
-                f["action"]
+                f["detected_behavior"],
+                level_str
             )
 
     console.print(table)
-    console.print(f"\n[bold green]✔ Day 1 Complete:[/bold green] Ingested [bold cyan]{len(flows)}[/bold cyan] network flow records.")
+    console.print(f"\n[bold green]✔ Day 2 Complete:[/bold green] Evaluated heuristics for [bold cyan]{len(analyzed_flows)}[/bold cyan] network flows.")
 
 if __name__ == "__main__":
     main()
