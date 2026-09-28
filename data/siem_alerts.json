@@ -1,0 +1,25 @@
+{
+    "total_alerts": 2,
+    "alerts": [
+        {
+            "flow_id": "FLOW-1002",
+            "source_ip": "203.0.113.42",
+            "destination_ip": "10.0.1.10",
+            "destination_port": 22,
+            "threat_level": "HIGH",
+            "detected_behavior": "External Probing on Sensitive Port (22)",
+            "statistical_anomaly": false,
+            "quarantine_action": "FLAG FOR REVIEW"
+        },
+        {
+            "flow_id": "FLOW-1003",
+            "source_ip": "198.51.100.88",
+            "destination_ip": "10.0.2.20",
+            "destination_port": 3306,
+            "threat_level": "HIGH",
+            "detected_behavior": "External Probing on Sensitive Port (3306)",
+            "statistical_anomaly": false,
+            "quarantine_action": "FLAG FOR REVIEW"
+        }
+    ]
+}
